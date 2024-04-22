@@ -1,0 +1,72 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Register</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form" (submit)="register()">
+        <ion-list>
+
+
+            <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input formControlName="name" type="text" required></ion-input>
+                <div *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+                    <ion-text color="danger">Name is required.</ion-text>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Surname</ion-label>
+                <ion-input type="text" formControlName="surname" required></ion-input>
+                <div *ngIf="form.get('surname')?.errors?.['required'] && form.get('surname')?.touched">
+                    <ion-text color="danger">Please enter surname.</ion-text>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Location</ion-label>
+                <ion-input type="text" formControlName="location" required></ion-input>
+                <div *ngIf="form.get('location')?.errors?.['required'] && form.get('location')?.touched">
+                    <ion-text color="danger">Please enter location.</ion-text>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="email" formControlName="email" required></ion-input>
+                <div *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">
+                    <ion-text color="danger">Please enter email.</ion-text>
+                </div>
+                <div *ngIf="form.get('email')?.errors?.['email'] && form.get('email')?.touched">
+                    <ion-text color="danger">Please enter a valid email.</ion-text>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" formControlName="password" required></ion-input>
+                <div *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
+                    <ion-text color="danger">Please enter password.</ion-text>
+                </div>
+                <div *ngIf="form.get('password')?.errors?.['minlength'] && form.get('password')?.touched">
+                    <ion-text color="danger">Password must be at least 8 characters long.</ion-text>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label>Blood Type</ion-label>
+                <ion-select formControlName="bloodType">
+                    <ion-select-option value="A+">A+</ion-select-option>
+                    <ion-select-option value="A-">A-</ion-select-option>
+                    <ion-select-option value="B+">B+</ion-select-option>
+                    <ion-select-option value="B-">B-</ion-select-option>
+                    <ion-select-option value="O+">O+</ion-select-option>
+                    <ion-select-option value="O-">O-</ion-select-option>
+                    <ion-select-option value="AB+">AB+</ion-select-option>
+                    <ion-select-option value="AB-">AB-</ion-select-option>
+                </ion-select>
+                <div *ngIf="form.get('bloodType')?.errors?.['required'] && form.get('bloodType')?.touched">
+                    <ion-text color="danger">Please select blood type.</ion-text>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-button expand="block" type="submit" [disabled]="form.invalid">Register</ion-button>
+    </form>
+</ion-content>

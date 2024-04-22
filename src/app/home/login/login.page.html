@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Login</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content>
+  <form [formGroup]="form" (submit)= login()">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input name="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input name="password" type="password"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-button expand="block">Login</ion-button>
+    </form>
+</ion-content> -->
+
+<!-- login.component.html -->
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" type="email" required></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('email')?.invalid && 
+    (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+        <ion-text color="danger" *ngIf="loginForm.get('email')?.hasError('required')">
+            Email is required
+        </ion-text>
+        <ion-text color="danger" *ngIf="loginForm.get('email')?.hasError('email')">
+            Invalid email address
+        </ion-text>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password" required></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('password')?.invalid &&
+     (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+        <ion-text color="danger">
+            Password is required
+        </ion-text>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+</form>
