@@ -1,0 +1,32 @@
+h2{
+    position: relative;
+    width: fit-content;
+}
+
+h2::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    height:2px ;
+    width: 50%;
+    background-color: grey;
+}
+.wrap{
+    display: flex;
+    justify-content: center;
+}
+.content1{
+    background-color: rebeccapurple;
+}
+.line{
+    width: 100%;
+    height: 2px;
+    background-color: grey;
+    margin-top: 8px;
+}
+.text-area ion-icon {
+    margin-top: 8px;
+    font-size: 24px;
+}

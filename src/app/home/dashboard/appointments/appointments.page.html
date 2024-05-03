@@ -1,0 +1,92 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-button color="dark" class="ion-no-padding" slot="start">
+      <ion-back-button class="ion-no-padding" defaultHref="/home"></ion-back-button>
+    </ion-button>
+    <ion-title>appointment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content">
+    <div class="wrap">
+      <h2 class="ion-text-center" color="dark">
+       Your Appointment
+      </h2>
+    </div>
+  </div>
+  <ion-row class="ion-justify-content-center ion-padding-horizontal ion-margin-top">
+    <ion-button expand="block" color="danger" (click)="showUpcoming()">Upcoming Appointments</ion-button>
+    <ion-button expand="block" color="success" (click)="showPrev()">Previous Appointments</ion-button>
+  </ion-row>
+  <div class="text-area" *ngIf="showUp">
+    <ion-title class="ion-padding ion-margin">Upcoming Appointments</ion-title>
+    <ion-card class="ion-padding" *ngFor="let appointment of upcomingAppointments">
+      <ion-col class="ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-card-header class="ion-no-padding"> {{userLogged?.donorRecipient==='donor'?'Recipient: '+appointment?.recipient:'Donor: '+appointment?.donor}}
+            {{userLogged?.donorRecipient!=='donor'?'(Donor)':"('Recipient')"}}</ion-card-header>
+          <ion-card-subtitle class="ion-no-padding">{{"Blood type: "+userLogged?.bloodType}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Location: {{appointment.appointmentLocation || 'Qoaling'}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Registration type:
+            {{userLogged?.donorRecipient==='donor'? appointment?.recipientType.toUpperCase():appointment?.donorType.toUpperCase()}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Date: {{appointment?.appoimentDate}}</ion-card-subtitle>
+        </ion-col>
+        <div class="line"></div>
+        <ion-row class="ion-justify-content-start">
+            <ion-button expand="block" color="danger" (click)=" userLogged?.donorRecipient==='donor' ? cancelAppointment({
+              donorid:id,
+              recipientUid:appointment.recipientUid,
+              allId:appointment.allId,
+              recipientId:appointment.recipientId,
+              donorUid:appointment.id
+              }):cancelAppointment({
+              donorid:appointment.donorId,
+              recipientUid:appointment.id,
+              allId:appointment.allId,
+              recipientId:userLogged.id,
+              donorUid:appointment.donorUid
+              })">Cancel</ion-button>
+            <ion-button expand="block" color="success" 
+             (click)=" userLogged?.donorRecipient==='donor' ? doneAppointment({
+              donorid:id,
+              recipientUid:appointment.recipientUid,
+              allId:appointment.allId,
+              recipientId:appointment.recipientId,
+              donorUid:appointment.id
+              }):doneAppointment({
+              donorid:appointment.donorId,
+              recipientUid:appointment.id,
+              allId:appointment.allId,
+              recipientId:userLogged.id,
+              donorUid:appointment.donorUid
+              })"
+            >Done</ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-card>
+  </div>
+  <div class="text-area" *ngIf="!showUp">
+    <ion-title class="ion-padding ion-margin">Previous Appointments</ion-title>
+    <ion-card class="ion-padding" *ngFor="let appointment of previousAppointments">
+      <ion-col class="ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-card-header class="ion-no-padding"> {{userLogged?.donorRecipient==='donor'?'Recipient:
+            '+appointment?.recipient:'Donor: '+appointment?.donor}}
+            {{userLogged?.donorRecipient!=='donor'?'(Donor)':"('Recipient')"}}</ion-card-header>
+          <ion-card-subtitle class="ion-no-padding">{{"Blood type: "+userLogged?.bloodType}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Location: {{appointment.appointmentLocation ||
+            'Qoaling'}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Registration type:
+            {{userLogged?.donorRecipient==='donor'?
+            appointment?.recipientType.toUpperCase():appointment?.donorType.toUpperCase()}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Date: {{appointment?.appoimentDate}}</ion-card-subtitle>
+        </ion-col>
+        <div class="line"></div>
+        <ion-row class="ion-justify-content-start">
+          {{appointment?.status}}
+        </ion-row>
+      </ion-col>
+    </ion-card>
+  </div>
+</ion-content>

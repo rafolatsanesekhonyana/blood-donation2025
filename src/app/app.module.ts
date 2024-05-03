@@ -7,13 +7,17 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports:
-
-  [AngularFireModule.initializeApp(environment.firebaseConfig),  BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports:[
+    AngularFireModule.initializeApp(environment.firebaseConfig),  
+    BrowserModule, IonicModule.forRoot(), 
+    AppRoutingModule,
+    HttpClientModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

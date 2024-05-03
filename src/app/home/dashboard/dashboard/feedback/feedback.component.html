@@ -1,0 +1,9 @@
+<form>
+  <ion-title text-center (ngSubmit)="submit()">FeedBack</ion-title >
+  <div class="wrap">
+    <ion-icon name="person"></ion-icon><ion-input placeholder="Enter name" [(ngModel)]="name" [name]="name"></ion-input>
+  </div>
+
+  <ion-textarea placeholder="Message" [(ngModel)]="comment" name="text"></ion-textarea>
+  <ion-button expand="block" color="dark">Submit</ion-button>
+</form>

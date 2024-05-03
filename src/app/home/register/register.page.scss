@@ -1,0 +1,113 @@
+
+#content{
+    color: red;
+}
+#rounded{
+width: 100%;
+height: 100px;
+-moz-border-radius: 50px;
+-wekit-border-radius: 50px;
+border-radius: 10px;
+margin-bottom: 10px;
+color: aqua;
+}
+
+ion-note{
+    border: none;
+    background-color: rgba(255, 0, 0, 0.116);
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    margin: 0 0 10px 0;
+    font-size: 1em;
+}
+ion-item {
+    flex-direction: column !important;
+    -ms-flex-align: flex-start !important;
+    align-items: flex-start !important;
+}
+ion-label{
+    display: block !important;
+   width: 100% !important;
+}
+form{
+    font-size: 16px;
+    width: 100vw;
+    padding: 15px;
+}
+.item-interactive.ion-invalid, .item-interactive.ion-valid{
+    --highlight-background:transparent;
+}
+
+.item-interactive{
+    --border-width:  0;
+    --inner-border-width: 0;
+    --show-full-highlight: 1;
+    --show-inset-highlight: 0;
+}
+
+.item-interactive.ion-focused,
+.item-interactive.item-has-focus,
+.item-interactive.ion-touched.ion-invalid {
+    --full-highlight-height: calc(var(--highlight-height)* var(--show-full-highlight ));
+    --inset-highlight-height: calc(var(--highlight-height)* var(--show-inset-highlight));
+}
+.legacy-input.sc-ion-input-md-h .native-input.sc-ion-input-md {
+    --padding-start: 15px;
+    --padding-end:15px;
+    font-size: 18px;
+}
+.wrap{
+    font-size: 1em;
+    width: 100%;
+}
+.wrap div{
+    display:flex;
+    width:100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px 0;
+}
+.label-floating.sc-ion-label-md-h {
+    -webkit-transform: translateY(150%);
+    transform: translateY(150%);
+    transition: transform .5s;
+    display: block;
+    padding:0 10px;
+}
+.ion-focused.label-floating.sc-ion-label-md-h,
+.ion-focused .label-floating.sc-ion-label-md-h,
+.item-has-focus.label-floating.sc-ion-label-md-h,
+.item-has-focus .label-floating.sc-ion-label-md-h,
+.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating,
+.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h,
+.item-has-value.label-floating.sc-ion-label-md-h,
+.item-has-value .label-floating.sc-ion-label-md-h {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%)
+}
+.ion-focused.label-stacked.sc-ion-label-md-h:not(.ion-color),
+.ion-focused .label-stacked.sc-ion-label-md-h:not(.ion-color),
+.ion-focused.label-floating.sc-ion-label-md-h:not(.ion-color),
+.ion-focused .label-floating.sc-ion-label-md-h:not(.ion-color),
+.item-has-focus.label-stacked.sc-ion-label-md-h:not(.ion-color),
+.item-has-focus .label-stacked.sc-ion-label-md-h:not(.ion-color),
+.item-has-focus.label-floating.sc-ion-label-md-h:not(.ion-color),
+.item-has-focus .label-floating.sc-ion-label-md-h:not(.ion-color) {
+    color: #000
+}
+form {
+    ion-col {
+        ion-row {
+            gap: 5px;
+            width: 100%;
+        }
+    };
+    ion-input {
+        border: 2px solid rgba(0, 0, 0, 0.281);
+        border-radius: 5px;
+        width: 100%;
+        --padding-start:10px;
+        --padding-end: 10px;
+    }
+}

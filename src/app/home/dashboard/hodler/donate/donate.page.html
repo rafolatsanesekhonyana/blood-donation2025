@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-button color="dark" class="ion-no-padding" slot="start">
+      <ion-back-button class="ion-no-padding" defaultHref="/home"></ion-back-button>
+    </ion-button>
+    <ion-title>Donate</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="donationForm" (ngSubmit)="onSubmit()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{user.registrationType==='individual'?'Full
+              Name':user.registrationType==='hospital'?'Hospital name':'Blood bank name'}}</ion-label>
+            <ion-input formControlName="fullName" type="text" [(ngModel)]="fullName" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" [(ngModel)]="user.email" type="email" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input formControlName="phone" [(ngModel)]="user.contactNumber" type="tel" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Age</ion-label>
+            <ion-input formControlName="age" type="number" min="18" max="45" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Recipient</ion-label>
+            <ion-input formControlName="donorRecipient" [(ngModel)]="user.donorRecipient" readonly="true"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Registration type</ion-label>
+            <ion-input formControlName="registrationType" [(ngModel)]="user.registrationType"
+              readonly="true"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item class="wrap">
+            <ion-label>Blood Type</ion-label>
+            <ion-select formControlName="bloodType" required [(ngModel)]="user.bloodType"
+              *ngIf="user.registrationType==='individual'">
+              <ion-select-option value="">Select Blood Type</ion-select-option>
+              <ion-select-option [value]="user.bloodType">{{user.bloodType}}</ion-select-option>
+            </ion-select>
+            <ion-select formControlName="bloodType" required [(ngModel)]="user.bloodType"
+              *ngIf="user.registrationType!=='individual'">
+              <ion-select-option value="">Select Blood Type</ion-select-option>
+              <ion-select-option *ngFor="let blood of bloodTypes" [value]="blood">{{blood}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label>Preferred Donation Date</ion-label><br>
+          </ion-item>
+
+          <ion-item>
+            <ion-datetime [min]="dateRestricter" formControlName="requestDate" required></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Preferred Donation Location</ion-label>
+            <ion-input formControlName="requestLocation" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-checkbox formControlName="termsAgreed" required></ion-checkbox>
+            <ion-label class="ion-no-margin ion-no-padding term">I agree to the terms and conditions</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" [disabled]="donationForm.invalid" expand="block">Submit</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+

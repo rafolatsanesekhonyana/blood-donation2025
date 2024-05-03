@@ -1,0 +1,32 @@
+h2 {
+    position: relative;
+    width: fit-content;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    height: 2px;
+    width: 50%;
+    background-color: grey;
+}
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+li{
+    list-style: none;
+    font-size: 16px;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+}
+p{
+    font-size: 16px;
+}

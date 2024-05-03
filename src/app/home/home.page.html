@@ -1,61 +1,84 @@
-<ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
-        <ion-content>
-            <ion-list id="inbox-list">
-                <ion-list-header>DASHBOARD</ion-list-header>
-                <ion-note>SAVE LIVES, DONATE BLOOD</ion-note>
+<ion-menu side="end" contentId="main-content">
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Menu
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+<ul>
+  <li (click)="goTo('faq')">
+    FAQ
+  </li>
+  <br>
+  <li routerLink="/about-us">
+    About US
+  </li>
+  <br>
+  <li (click)="goTo('contact')">
+    Contact US
+  </li>
+  <br>
+  <li routerLink="/register">
+    Register
+  </li>
+  <br>
+  <li routerLink="/loging">
+    Sign in
+  </li>
+</ul>
+</ion-content>
+</ion-menu>
 
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-                    <ion-item routerDirection="root" [routerLink]="p.url" lines="none" detail="false" routerLinkActive="selected">
-                        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                        <ion-label>
-                            {{p.title}}
-                        </ion-label>
-                    </ion-item>
-                </ion-menu-toggle>
-            </ion-list>
+  <div class="ion-page main" id="main-content">
+  <ion-header class="too-bar">
+    <ion-toolbar>
+      <ion-title side="end" color="primary">Blood Connect</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+  
+  <div class="hero-wrapper">
+    <img  class="hero ion-rounded" src="../../assets/hero.jpg" alt="">
+  </div>
+  <div class="cart">
+    <ion-grid>
+      <ion-col>
+        <ion-row>
+          <ion-card>
+        <ion-img expand="full" src="assets/ambulance.jpg" alt="Ambulance"></ion-img>
+          <ion-card-title class="ion-text-center ion-padding-top">Ambulance</ion-card-title>
+          <div class="ion-padding ion-text-center">
+            <ion-card-subtitle>Ambulances registered in our system</ion-card-subtitle>
+            <ion-card-content>this will show Ambulance compamies that you can contact on emergencies</ion-card-content>
+          </div>
+          
+  </ion-card>
+        </ion-row>
+        <ion-row>
+          <ion-card>
+            <ion-img src="assets/Star of life.jpg" alt="Hospital"></ion-img>
+            <ion-card-title color="dark" class="ion-text-center ion-padding-top">Hospital</ion-card-title>
+            <div class="ion-padding ion-text-center">
+              <ion-card-subtitle>Hospitals registered in our system</ion-card-subtitle>
+            <ion-card-content>this will show all blood banks and hospitals for you to click on them and register under
+              it</ion-card-content>
+            </div>
+            
+          </ion-card>
+        </ion-row>
+      </ion-col>
+</ion-grid>
+</div>
+<app-contact id="contact"></app-contact>
+<app-faq id="faq"></app-faq>
+<ion-footer>
 
-            <ion-list id="labels-list">
-                <ion-list-header>Labels</ion-list-header>
+</ion-footer>
+</ion-content>
+</div>
 
-                <ion-item *ngFor="let label of labels" lines="none">
-                    <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-                    <ion-label>{{ label }}</ion-label>
-                </ion-item>
-            </ion-list>
-        </ion-content>
-    </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-</ion-split-pane>
-<!--
-
-
-<ion-app>
-    <ion-split-pane contentId="main-content">
-        <ion-menu contentId="main-content">
-            <ion-header>
-                <ion-toolbar>
-                    <ion-title>blood App</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <ion-content>
-                <ion-list>
-                    <ion-menu-toggle auto-hide="false">
-                        <ion-item [routerLink]="['/login']">
-                            <ion-icon name="login" slot="start"></ion-icon>
-                            <ion-label>Login</ion-label>
-                        </ion-item>
-                    </ion-menu-toggle>
-                    <ion-menu-toggle auto-hide="false">
-                        <ion-item [routerLink]="['/register']">
-                            <ion-icon name="register" slot="start"></ion-icon>
-                            <ion-label>Register</ion-label>
-                        </ion-item>
-                    </ion-menu-toggle>
-
-                </ion-list>
-            </ion-content>
-        </ion-menu>
-        <ion-router-outlet id="main-content"></ion-router-outlet>
-    </ion-split-pane>
-</ion-app> -->
