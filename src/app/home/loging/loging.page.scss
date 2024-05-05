@@ -10,17 +10,15 @@ ion-input {
 }
 ion-header{
     --box-shadow: none;
-    
     ion-toolbar{
-        --background: rgb(224, 216, 216);
+        --background: var(--ion-color-dark);
+        color:#fff;
+
         
         ion-button{
             --background:transparent;
             --padding-start: 0;
             height: 20px;
-        ion-back-button {
-            color: black;
-        }
         }
     }
     

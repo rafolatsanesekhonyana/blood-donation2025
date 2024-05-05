@@ -1,9 +1,14 @@
+
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="dark">
+    <ion-button color="dark" slot="start">
+      <ion-back-button [defaultHref]="'dashboard/'+id"></ion-back-button>
+    </ion-button>
     <ion-title>dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+
+  <ion-content>
   <ion-item>
 
     <ion-button color="medium" slot="end" (click)="logout()">
@@ -40,7 +45,7 @@
         <div class="line"></div>
         <ion-row class="ion-justify-content-start">
           <ion-button expand="block" color="danger" (click)="requestBlood(request)" >Request</ion-button>
-          <ion-chip class="ion-center">
+          <ion-chip class="ion-center" (click)="phone(request.phone)">
             <ion-icon name="call-outline" color="success"></ion-icon>
           </ion-chip>
           
@@ -64,7 +69,7 @@
         <div class="line"></div>
         <ion-row class="ion-justify-content-start">
           <ion-button expand="block" color="danger" (click)="donate(request)">Donate</ion-button>
-          <ion-chip class="ion-center">
+          <ion-chip class="ion-center" (click)="phone(request.phone)">
             <ion-icon name="call-outline" color="success"></ion-icon>
           </ion-chip>
         </ion-row>
@@ -74,5 +79,8 @@
   <div class="ion-text-center" *ngIf="requests.length<1">
     {{userLogged.donorRecipient==='donor'?'No Recipients just yet from '+registrationTypes[selectedType.i].title:'No donors just yet from '+registrationTypes[selectedType.i].title}}
   </div>
-  <!-- <app-feedback></app-feedback> -->
+  <app-feedback></app-feedback>
 </ion-content>
+
+
+

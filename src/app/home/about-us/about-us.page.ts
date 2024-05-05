@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseServiceService } from 'src/app/firebase.service.service';
 
 @Component({
   selector: 'app-about-us',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about-us.page.scss'],
 })
 export class AboutUsPage implements OnInit {
-
-  constructor() { }
+feedbacks:any=[]
+  constructor(private fire: FirebaseServiceService) { 
+    this.fire.getFeedbacks().subscribe(data=>this.feedbacks=data.slice(0,5))
+  }
 
   ngOnInit() {
   }

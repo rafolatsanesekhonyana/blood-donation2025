@@ -1,7 +1,7 @@
 <!-- about-us.page.html -->
 
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-button color="dark" class="ion-no-padding" slot="start">
       <ion-back-button class="ion-no-padding" defaultHref="/home"></ion-back-button>
     </ion-button>
@@ -79,24 +79,18 @@
       <h2>Testimonials</h2>
       </div>
       <ion-row>
-    <ion-card>
+        <ion-col *ngFor="let feed of feedbacks" size="12">
+<ion-card >
       <ion-card-header>
-        Testimonial 1
+        {{feed.name}}
       </ion-card-header>
-      <ion-card-content>
-        "Blood Connect helped me find a blood donor for my [type of medical emergency] within hours. I'm grateful for
-        their service!"
+      <ion-card-content> 
+        {{feed.comment}}
       </ion-card-content>
     </ion-card>
-    <ion-card>
-      <ion-card-header>
-        Testimonial 2
-      </ion-card-header>
-      <ion-card-content>
-        "As a regular blood donor, I appreciate the convenience and ease of finding donation opportunities through Blood
-        Connect. Highly recommended!"
-      </ion-card-content>
-    </ion-card>
+        </ion-col>
+    
+    
   </ion-row>
   </div>
 

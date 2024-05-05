@@ -58,7 +58,7 @@ export class RegisterPage implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       this.authservice.register(this.registerForm)
-      console.log(this.registerForm.value);
+      this.registerForm.reset()
     }
   }
   route(){

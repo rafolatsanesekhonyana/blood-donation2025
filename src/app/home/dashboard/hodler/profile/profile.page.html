@@ -1,5 +1,8 @@
-<ion-header class="ion-margin-vertical">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-button color="dark" class="ion-no-padding" slot="start">
+      <ion-back-button class="ion-no-padding" [defaultHref]="'dashboard/'+id"></ion-back-button>
+    </ion-button>
   <ion-title>Your profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -90,7 +93,7 @@
 
     </ion-item>
 
-    <ion-button type="submit" color="dark" [disabled]="profileForm.invalid" expand="block">Register</ion-button>
+    <ion-button type="submit" color="dark" [disabled]="profileForm.invalid" expand="block">Save</ion-button>
     <ion-text color="primary">Change password</ion-text>
     <div *ngIf="false">
       <ion-item>

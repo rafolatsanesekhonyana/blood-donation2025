@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseServiceService } from 'src/app/firebase.service.service';
 
 @Component({
   selector: 'app-feedback',
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class FeedbackComponent  implements OnInit {
   name:string=''
   comment:string=''
-  constructor() { }
+  constructor(private fire:FirebaseServiceService) { }
 
   ngOnInit() {}
   submit(){
-    console.log(this.name,this.comment)
+    this.fire.sendFeedback(this.name,this.comment)
+    this.name=''
+    this.comment=''
   }
 
 }

@@ -45,19 +45,7 @@ export class DashboardPage implements OnInit {
       this.fireService.getUser(this.id ?? '').subscribe(value => {
         if (value) {
           this.userLogged = value
-
-
-          this.fireService.getRequests().subscribe(requests => {
-            const f = requests.filter(request => {
-              return this.userLogged.donorRecipient !== request.donorRecipient && request.bloodType === this.userLogged.bloodType && request.status === 'pending'
-            })
-            this.requests = f.map(request => {
-              return {
-                ...request,
-                requestDate: this.fomatDate(request.requestDate)
-              }
-            })
-          })
+          this.checkSelectedType(this.selectedType)
         } else {
           this.nav.navigate(['/home'])
         }
@@ -86,16 +74,33 @@ export class DashboardPage implements OnInit {
   checkSelectedType(check: any) {
     this.selectedType = check
     this.fireService.getRequests().subscribe(requests => {
+      requests.map(req=>{
+        if (req.status === 'pending' && this.userLogged.donorRecipient !== 'donor'&& req.donorRecipient==='donor' && (new Date(req.requestDate).toISOString() < new Date().toISOString())) {
+          this.fireService.expireDonor({ allId: req.allId, requestId: req.id, donorId: req.donorId})
+          return req
+        }
+        if (req.status === 'pending' && this.userLogged.donorRecipient === 'donor' && req.donorRecipient !== 'donor' && (new Date(req.requestDate).toISOString() < new Date().toISOString())) {
+          this.fireService.expireRecipient({ allId: req.allId, requestId: req.id, recipientId: req.recipientId })
+          return req
+        }
+      })
       let f = []
-      if (this.selectedType.value === 'all') {
-        f = requests.filter(request => {
-          return this.userLogged.donorRecipient !== request.donorRecipient && request.bloodType === this.userLogged.bloodType && request.status === 'pending'
-        })
+        if (this.selectedType.value === 'all') {
+          f = requests.filter(request => {
+            if (this.userLogged.donorRecipient !== 'donor') {
+              return request.donorRecipient === 'donor' && (request.bloodType.slice(0, (request.bloodType).length - 1) === this.userLogged.bloodType.slice(0, (this.userLogged.bloodType).length - 1) || request.bloodType === 'O+' || request.bloodType === 'O-') && request.status === 'pending' && (new Date(request.requestDate).toISOString() > new Date().toISOString()) 
+            }
+            return request.donorRecipient !== 'donor' && (request.bloodType.slice(0, (request.bloodType).length - 1) === this.userLogged.bloodType.slice(0, (this.userLogged.bloodType).length - 1) || request.bloodType === 'AB+' || request.bloodType === 'AB-') && request.status === 'pending' && (new Date(request.requestDate).toISOString() > new Date().toISOString()) 
+          })
       } else {
-        f = requests.filter(request => {
-          return this.userLogged.donorRecipient !== request.donorRecipient && request.bloodType === this.userLogged.bloodType && request.registrationType === this.selectedType?.value && request.status === 'pending'
-        })
+          f = requests.filter(request => {
+            if (this.userLogged.donorRecipient !== 'donor') {
+              return request.donorRecipient === 'donor' && (request.bloodType.slice(0, (request.bloodType).length - 1) === this.userLogged.bloodType.slice(0, (this.userLogged.bloodType).length - 1) || request.bloodType === 'O+' || request.bloodType === 'O-') && request.status === 'pending' && (new Date(request.requestDate).toISOString() > new Date().toISOString()) && request.registrationType === this.selectedType?.value
+            }
+            return request.donorRecipient !== 'donor' && ((request.bloodType).slice(0, (request.bloodType).length - 1) === (this.userLogged.bloodType).slice(0, (this.userLogged.bloodType).length - 1) || request.bloodType === 'AB-'  || request.bloodType === 'AB+') && request.status === 'pending' && (new Date(request.requestDate).toISOString() > new Date().toISOString())&& request.registrationType === this.selectedType?.value
+          })
       }
+        
       this.requests = f.map(request => {
         return {
           ...request,
@@ -171,6 +176,12 @@ export class DashboardPage implements OnInit {
       ]
     }).then(e => e.present())
   }
-
-
+  phone(phone:string){
+    this.alertCrl.create({
+      header: 'Phone',
+      message:phone ,
+      buttons: [ 'okay'
+      ]
+    }).then(e => e.present())
+  }
 }

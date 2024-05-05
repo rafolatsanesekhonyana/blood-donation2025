@@ -46,7 +46,7 @@ ngOnInit() {
   onSubmit() {
     if (this.donationForm.valid) {
       this.fireService.donationSubmit(this.donationForm.value,this.id)
-      console.log(this.donationForm.value);
+      this.donationForm.reset()
     }
   }
 }

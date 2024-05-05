@@ -29,7 +29,8 @@ export class LogingPage implements OnInit {
   onSubmit() {
     if (this.LogingForm.valid) {
       this.login=''
-      this.authservice.loging(this.LogingForm.value) 
+      this.authservice.loging(this.LogingForm.value)
+      this.LogingForm.reset() 
     }
   }
   resetPassword(){

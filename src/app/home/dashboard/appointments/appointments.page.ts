@@ -22,13 +22,34 @@ export class AppointmentsPage implements OnInit {
           this.userLogged = value
 
           this.fireService.getUserAppointments(this.id).subscribe(appointments => {
+            appointments.map(app => {
+              if (app.status === 'pending' && this.userLogged.donorRecipient !== 'donor' && (new Date(app.appoimentDate).toISOString() < new Date().toISOString())) {
+                this.fireService.expireApp({
+                  donorid: app.donorId,
+                  recipientUid: app.id,
+                  allId: app.allId,
+                  recipientId: this.userLogged.id,
+                  donorUid: app.donorUid })
+                return app
+              }
+              if (app.status === 'pending' && this.userLogged.donorRecipient === 'donor' && (new Date(app.appoimentDate).toISOString() < new Date().toISOString())) {
+                this.fireService.expireRecipient({
+                  donorid: this.id,
+                  recipientUid: app.recipientUid,
+                  allId: app.allId,
+                  recipientId: app.recipientId,
+                  donorUid: app.id
+              })
+                return app
+              }
+            })
             const f = appointments.filter(appointment => {
               return this.userLogged.donorRecipient !== appointment.donorRecipient && appointment.bloodType === this.userLogged.bloodType && appointment.status === 'pending'
             })
             this.appointments = appointments.map(appointment => {
               return {
                 ...appointment,
-                requestDate: this.fomatDate(appointment.appoimentDate)
+                appuestDate: this.fomatDate(appointment.appoimentDate)
               }
             })
             this.upcomingAppointments= this.appointments.filter(a=>a.status==='pending')

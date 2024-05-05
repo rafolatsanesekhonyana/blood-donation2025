@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { FirebaseError } from 'firebase/app';
 
@@ -10,7 +10,7 @@ import { FirebaseError } from 'firebase/app';
 })
 export class FirebaseServiceService {
   session: boolean = false;
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private nav: NavController, private ctl:AlertController) {
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private nav: NavController, private ctl:AlertController,private tost: ToastController) {
 
   }
  
@@ -47,6 +47,11 @@ export class FirebaseServiceService {
               id: userCredential.user?.uid
             }
           )
+        this.tost.create({
+          message: 'Successfully registered',
+          position: 'bottom',
+          duration: 5000
+        }).then(e => e.present())
       })
       .catch((err: FirebaseError) => {
         if (err.code === 'auth/email-already-in-use') {
@@ -70,9 +75,14 @@ export class FirebaseServiceService {
       this.auth.signInWithEmailAndPassword(value.email, value.password).then(res => {
         this.session = true;
         resolve(res)
-        this.nav.navigateForward(['/dashboard',res.user?.uid,'dashboard']);
+        this.nav.navigateForward(['/dashboard',res.user?.uid]);
       },
-        error => reject(error)
+    error =>{ reject(error)
+      this.tost.create({
+        message:'Wrong password or username',
+        position:'bottom',
+        duration:5000
+      }).then(e=>e.present())}
       );
     });
 
@@ -103,7 +113,11 @@ export class FirebaseServiceService {
       allId: allId.id,
     })
   })
-      console.log('success')
+  this.tost.create({
+    message: 'Successfully submitted',
+    position: 'bottom',
+    duration: 5000
+  }).then(e => e.present())
     })
   }
   requestSubmit(request: any, id: string) {
@@ -133,7 +147,11 @@ export class FirebaseServiceService {
           requestType: 'recipient',
         })
       })
-      console.log('success')
+      this.tost.create({
+        message: 'Successfully submitted',
+        position: 'bottom',
+        duration: 5000
+      }).then(e => e.present())
     })
   }
   getRequests():Observable<any[]>{
@@ -299,7 +317,11 @@ export class FirebaseServiceService {
         console.log('success')
       })
 
-      console.log('success')
+      this.tost.create({
+        message: 'Donation went successfully',
+        position: 'bottom',
+        duration: 5000
+      }).then(e => e.present())
     })
   }
 
@@ -482,7 +504,11 @@ export class FirebaseServiceService {
           })
         this.firestore.collection('requests').doc(donation.allId).update({ status: 'accepted' })
         this.firestore.collection('users/' + donation.donorId+ '/requests').doc(donation.requestId).update({ status: 'accepted' })
-        console.log('success')
+        this.tost.create({
+          message: 'Request went successfully',
+          position: 'bottom',
+          duration: 5000
+        }).then(e => e.present())
       })
     })
   }
@@ -502,6 +528,12 @@ export class FirebaseServiceService {
   sendFeedback(name:string,comment:string){
     this.firestore.collection('feedback').add({
       name,comment
+    }).then(ref=>{
+      this.tost.create({
+        message: 'Feedback sent successfully',
+        position: 'bottom',
+        duration: 5000
+      }).then(e => e.present())
     })
   }
   getFeedbacks():Observable<any[]>{
@@ -512,5 +544,18 @@ export class FirebaseServiceService {
       console.log('logout')
       this.nav.navigateBack(['home'])
     })
+  }
+  expireDonor(req:any){
+    this.firestore.collection('requests').doc(req.allId).update({ status: 'Expired' })
+    this.firestore.collection('users/' + req.donorId + '/requests').doc(req.requestId).update({ status: 'Expered' })
+  }
+  expireRecipient(req: any) {
+    this.firestore.collection('requests').doc(req.allId).update({ status: 'Expired' })
+    this.firestore.collection('users/' + req.recipientId + '/requests').doc(req.requestId).update({ status: 'Expered' })
+  }
+  expireApp(app: any) {
+    this.firestore.collection('appointments').doc(app.allId).update({ status: 'Not attended' })
+    this.firestore.collection('users/' + app.donorid + '/appointments').doc(app.donorUid).update({ status: 'Not attended' })
+    this.firestore.collection('users/' + app.recipientId + '/appointments').doc(app.recipientUid).update({ status: 'Not attended' })
   }
 }

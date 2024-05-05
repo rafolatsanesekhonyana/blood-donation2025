@@ -63,7 +63,7 @@ export class RecipientPage implements OnInit {
     if (this.requestForm.valid) {
       // Handle form submission logic here
       this.fireService.requestSubmit(this.requestForm.value,this.id)
-      console.log(this.requestForm.value);
+     this.requestForm.reset();
     }
   }
 
