@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavParams } from '@ionic/angular';
 import { FirebaseServiceService } from 'src/app/firebase.service.service';
 
 @Component({
@@ -11,8 +12,12 @@ export class DashboardPage implements OnInit{
   id:string=''
   users:any[]=[]
    user:any={}
-   showprof =signal(false)
+ 
+ 
+    
+   showprof =false
   constructor(private router: ActivatedRoute, private nav: Router, private fireService:FirebaseServiceService) {
+    
     this.router.paramMap.subscribe(value=>{
       if (!value.has('id')) {
         this.nav.navigate(['/home'])
@@ -37,5 +42,8 @@ export class DashboardPage implements OnInit{
    }
  ngOnInit() {
    
+ }
+ showMenu(){
+  this.showprof=!this.showprof
  }
 }

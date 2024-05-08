@@ -5,5 +5,5 @@
   </div>
 
   <ion-textarea placeholder="Message" [(ngModel)]="comment" name="text"></ion-textarea>
-  <ion-button expand="block" [disabled]="name.trim()===''&&comment.trim()===''" color="dark" (click)="submit()">Submit</ion-button>
+  <ion-button expand="block" [disabled]="name.trim()===''|| comment.trim()===''" color="dark" (click)="submit()">Submit</ion-button>
 </form>

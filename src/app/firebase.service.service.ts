@@ -131,20 +131,19 @@ export class FirebaseServiceService {
         requestDate: request.requestDate,
         age: request.age,
         requestLocation: request.requestLocation,
-        requestType: 'recipient',
         status: 'pending',
         timing:request.timing,
         id: ref1.id
       })
       this.firestore.collection(`requests`).add({
-        ...request, id: ref1.id, donorId: id, status: 'pending'
+        ...request, id: ref1.id, recipientId: id, status: 'pending'
       }).then(allId => {
         allId.set({
           ...request,
           id: ref1.id,
-          recipientId: id, status: 'pending',
+          recipientId: id, 
+          status: 'pending',
           allId: allId.id,
-          requestType: 'recipient',
         })
       })
       this.tost.create({
@@ -157,72 +156,7 @@ export class FirebaseServiceService {
   getRequests():Observable<any[]>{
     return this.firestore.collection('requests').valueChanges()
   }
-  // donate(donation: any, id: string) {
-  //   addDoc(collection(this.firestore, `users/${id}/appointments`),
-  //     {
-  //       appoimentDate: donation.appoimentDate,
-  //       appointmentLocation: donation.appointmentLocation,
-  //       recipient: donation.recipient,
-  //       recipientId: donation.recipientId,
-  //       recipientType: donation.recipientType,
-  //       requestId: donation.requestId,
-  //       status: 'pending'
-  //     }
-
-  //   ).then(ref => {
-  //     setDoc(ref, {
-        
-  //     })
-  //     addDoc(collection(this.firestore, `users/${donation.recipientId}/appointments`),
-  //       {
-  //         appoimentDate: donation.appoimentDate,
-  //         appointmentLocation: donation.appointmentLocation,
-  //         donor: donation.donor,
-  //         donorId: donation.donorId,
-  //         donorType: donation.donorType,
-  //         requestId: donation.requestId,
-  //         status: 'pending',
-  //         id: ref.id
-  //       }
-
-  //     ).then(ref2 => {
-  //       setDoc(ref2,
-  //         {
-            
-  //         }
-  //       )
-  //       addDoc(collection(this.firestore, `appointments`),
-  //         {
-  //           appoimentDate: donation.appoimentDate,
-  //           appointmentLocation: donation.appointmentLocation,
-  //           recipient: donation.recipient,
-  //           donor: donation.donor,
-  //           bloodType: donation.bloodType,
-  //           donorId: donation.donorId,
-  //           donorType: donation.donorType,
-  //           recipientId: donation.recipientId,
-  //           requestId: donation.requestId,
-  //           recipientType: donation.recipientType,
-  //           status: 'pending',
-  //           id: ref.id,
-  //         }).then(ref3 => {
-  //           setDoc(ref3,
-             
-  //           )
-  //           updateDoc(doc(this.firestore, 'users', id, 'appointments', ref.id), { recipientUid: ref2.id })
-  //           updateDoc(doc(this.firestore, 'users', id, 'appointments', ref.id), { allId: ref3.id })
-  //           updateDoc(doc(this.firestore, 'users', donation.recipientId, 'appointments', ref2.id), { allId: ref3.id })
-  //         })
-  //       updateDoc(doc(this.firestore, 'allrequests', donation.allId), { status: 'accepted' })
-  //       updateDoc(doc(this.firestore, 'users', donation.recipientId, 'requests', donation.requestId), { status: 'accepted' })
-  //       console.log('success')
-  //     })
-
-  //     console.log('success')
-  //   })
-
-
-  // }
+  
   donate(donation: any, id: string) {
     this.firestore.collection(`users/${id}/appointments`).add(
       {
