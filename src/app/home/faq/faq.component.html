@@ -1,0 +1,12 @@
+<div class="ion-padding">
+  <ion-title>FAQ</ion-title>
+  <ion-accordion-group multiple="true">
+    <ion-accordion *ngFor="let c of questions">
+    <ion-item slot="header">
+      <ion-label>{{c.question}}</ion-label>
+    </ion-item >
+    <div color="medium" class="ion-padding" slot="content">{{c.answer}}</div>
+  </ion-accordion>
+  </ion-accordion-group>  
+  
+</div>

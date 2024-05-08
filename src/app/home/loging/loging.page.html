@@ -1,0 +1,43 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar >
+    <ion-button  class="ion-no-padding ion-no-border" slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-button>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+<div class="form">
+<form [formGroup]="LogingForm" (ngSubmit)="onSubmit()">
+  <h2>Login</h2>
+  <div class="wrap">
+    <ion-icon name="mail"></ion-icon><ion-input placeholder="Enter email" formControlName="email" type="email"></ion-input>
+  </div>
+  <ion-note
+    *ngIf="LogingForm.get('email')?.errors?.['required'] && (LogingForm.get('email')?.dirty || LogingForm.get('email')?.touched)"
+    color="danger">Email is required</ion-note>
+  <ion-note
+    *ngIf="LogingForm.get('email')?.errors?.['email'] && (LogingForm.get('email')?.dirty || LogingForm.get('email')?.touched)"
+    color="danger">Invalid contact number format</ion-note>
+  <div class="wrap">
+    <ion-icon name="key"></ion-icon><ion-input placeholder="Enter password" formControlName="password" type="password"> </ion-input>
+  </div>
+  <ion-note
+    *ngIf="LogingForm.get('password')?.errors?.['required'] && (LogingForm.get('password')?.dirty || LogingForm.get('password')?.touched)"
+    color="danger">Password is required</ion-note>
+  <ion-note
+    *ngIf="login" color="danger">{{login}}</ion-note>
+    <ion-note
+      *ngIf="LogingForm.get('password')?.errors?.['minLength'] && (LogingForm.get('password')?.dirty || LogingForm.get('password')?.touched)"
+      color="danger">Password must be atleast 8 charaters</ion-note>
+  <ion-button type="submit" color="dark" [disabled]="LogingForm.invalid" expand="block">Login</ion-button>
+  <ion-text color="primary" (click)="resetPassword()">Forget password</ion-text>
+  <ion-item class="ion-no-padding ion-no-margin"></ion-item>
+  <ion-col class="ion-no-padding">
+    <ion-row class="ion-no-padding ion-no-margin ion-align-items-center">
+      <p class="ion-no-padding">Don't have an account?</p><ion-text color="primary" routerLink="/register">Register</ion-text>
+    </ion-row>
+  </ion-col>
+  </form>
+</div>
+</ion-content>

@@ -1,13 +1,46 @@
+.tool-bar{
+  color: aqua;
+}
+.cart{
+  color: #dd3131;
+}
 #container {
   text-align: center;
-
+  color: transparent;
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
 }
+li{
+  list-style: none;
+}
 
+.hero{
+  width: 80vw; 
+  height: 80vw;
+  border-radius: 50%;
+}
+.hero-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  // background-color: #dd3131;
+  position: relative;
+}
+.hero-wrapper::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 50%;
+  width: 100%;
+  height: 50%;
+  background-color: #dd3131;
+  z-index: -2;
+}
 #container strong {
   font-size: 20px;
   line-height: 26px;

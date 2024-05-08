@@ -12,17 +12,21 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    loadChildren: () => import('./home/login/login.module').then( m => m.LoginPageModule)
-  },
-  {
     path: 'register',
     loadChildren: () => import('./home/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'dashboard/:userId',
+    path: 'dashboard/:id',
     loadChildren: () => import('./home/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
+{
+  path: 'loging',
+    loadChildren: () => import('./home/loging/loging.module').then(m => m.LogingPageModule)
+},
+{
+  path: 'about-us',
+    loadChildren: () => import('./home/about-us/about-us.module').then(m => m.AboutUsPageModule)
+},
 ];
 
 @NgModule({

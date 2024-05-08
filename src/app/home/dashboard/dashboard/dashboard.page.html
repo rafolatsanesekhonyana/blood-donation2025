@@ -1,0 +1,86 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-button color="dark" slot="start">
+      <ion-back-button [defaultHref]="'dashboard/'+id"></ion-back-button>
+    </ion-button>
+    <ion-title>dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+  <ion-item>
+
+    <ion-button color="medium" slot="end" (click)="logout()">
+      <ion-icon name="log-out"></ion-icon><ion-label>Logout</ion-label>
+    </ion-button>
+
+
+    <ion-title class="proile">
+      {{userLogged.firstName }} {{userLogged.lastName}}
+    </ion-title>
+  </ion-item>
+  <div class="content">
+    <div class="wrap">
+      <h2 class="ion-text-center" color="dark">
+        {{userLogged.donorRecipient==='donor'?'Recipients':'Donors'}}
+      </h2>
+    </div>
+    <ion-row class="ion-padding chips" >
+      <ion-chip *ngFor="let check of registrationTypes; let i =index" [ngClass]="check.value===selectedType.value ?'active':'inactive'" (click)="checkSelectedType({i,value:check.value})">{{check.title}}</ion-chip>
+    </ion-row>
+
+  </div>
+  <div class="text-area" *ngIf="requests.length>0">
+    <ion-card class="ion-padding" *ngFor="let request of requests">
+
+      <ion-col *ngIf="userLogged.donorRecipient!=='donor'" class="ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-card-header class="ion-no-padding">Donor: {{request.fullName}}{{'('+request.donorRecipient+')'}}</ion-card-header>
+          <ion-card-subtitle class="ion-no-padding">{{"Blood type: "+request.bloodType}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Location: {{request.requestLocation || 'Qoaling'}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Registration type: {{request.registrationType.toUpperCase()}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Date: {{request.requestDate}}</ion-card-subtitle>
+        </ion-col>
+        <div class="line"></div>
+        <ion-row class="ion-justify-content-start">
+          <ion-button expand="block" color="danger" (click)="requestBlood(request)" >Request</ion-button>
+          <ion-chip class="ion-center" (click)="phone(request.phone)">
+            <ion-icon name="call-outline" color="success"></ion-icon>
+          </ion-chip>
+          
+        </ion-row>
+
+
+
+      </ion-col>
+      <ion-col *ngIf="userLogged.donorRecipient==='donor'" class="ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-card-header class="ion-no-padding">Recipient: {{request.fullName}}{{'('+request.donorRecipient+')'}}</ion-card-header>
+          <ion-card-subtitle class="ion-no-padding">{{"Blood type: "+request.bloodType}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Location: {{request.requestLocation || 'Qoaling'}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Registration type:
+            {{request.registrationType.toUpperCase()}}</ion-card-subtitle>
+            <ion-card-subtitle class="ion-no-padding">Date: {{request.requestDate}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-no-padding">Timing:
+            <ion-text color="danger">{{request.timing.toUpperCase() }}</ion-text></ion-card-subtitle>
+
+        </ion-col>
+        <div class="line"></div>
+        <ion-row class="ion-justify-content-start">
+          <ion-button expand="block" color="danger" (click)="donate(request)">Donate</ion-button>
+          <ion-chip class="ion-center" (click)="phone(request.phone)">
+            <ion-icon name="call-outline" color="success"></ion-icon>
+          </ion-chip>
+        </ion-row>
+      </ion-col>
+    </ion-card>
+  </div>
+  <div class="ion-text-center" *ngIf="requests.length<1">
+    {{userLogged.donorRecipient==='donor'?'No Recipients just yet from '+registrationTypes[selectedType.i].title:'No donors just yet from '+registrationTypes[selectedType.i].title}}
+  </div>
+  <app-feedback></app-feedback>
+</ion-content>
+
+
+

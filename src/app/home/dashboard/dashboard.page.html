@@ -1,13 +1,20 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>dashboard</ion-title>
+    <ion-buttons slot="end" (click)="showMenu()">
+      <ion-icon size="large" name="menu"></ion-icon>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-row class="ion-padding-start" *ngIf="showprof">
+    <ion-col routerLink="dashboard">Dashboard</ion-col>
+  <ion-col [routerLink]="user.donorRecipient==='donor'?'donate':'recipient'">{{user.donorRecipient==='donor'?'Donate':'Request'}}</ion-col>
+  <ion-col routerLink="appointments">Appointments</ion-col>
+  <ion-col routerLink="profile">Profile</ion-col>
+  </ion-row>
+  
 </ion-content>
+
+

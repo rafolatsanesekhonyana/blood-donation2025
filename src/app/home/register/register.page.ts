@@ -1,31 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators,FormGroup,FormBuilder, } from '@angular/forms';
+import { Component, OnInit,inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirebaseServiceService } from 'src/app/firebase.service.service';
+//import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+
+
+declare var google: any;
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage {
-  form :FormGroup;
+export class RegisterPage implements OnInit {
+  nearbyHospitals: any[] = [];
+  map: any;
+  marker: any;
+  latitude: number=0;
+  longitude: number=0;
+  service: any;
+  infowindow: any;
+  name :string=''
+  registerType=''
+  registerForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, private authservice: FirebaseServiceService){
 
-  constructor(private builder: FormBuilder, private db:FirebaseServiceService) {
-    this.form = this.builder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      location: ['', Validators.required],
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email:['',[Validators.required,Validators.email]],
+      password:['',[Validators.required,Validators.minLength(8)]],
+      gender: ['', Validators.required],
+      contactNumber: ['', [Validators.required, Validators.pattern('^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$')]],
       bloodType: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      donorRecipient: ['', Validators.required],
+      registrationType: ['', Validators.required],
+      hospitalName: ['', Validators.required],
+      location:[this.name, Validators.required]
     });
+
   }
 
-  register() {
-    this.db.register(this.form.value)
-    console.log(this.form.value)
+ 
+  ngOnInit() {
+    // Any additional initialization logic can go here
+    this.registerForm.get('registrationType')?.valueChanges.subscribe(()=>{
+      if (this.registerForm.getRawValue().registrationType==='individual') {
+        this.registerForm.get('hospitalName')?.clearValidators()
+        this.registerForm.get('hospitalName')?.updateValueAndValidity()
+      } else {
+        this.registerForm.get('hospitalName')?.setValidators(Validators.required)
+        this.registerForm.get('hospitalName')?.updateValueAndValidity()
+      }
+    })
+    
   }
 
-
+  onSubmit() {
+    if (this.registerForm.valid) {
+      this.authservice.register(this.registerForm)
+      this.registerForm.reset()
+    }
+  }
+  route(){
+                                                                                                                                        
+  }
 
 }
